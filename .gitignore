@@ -1,0 +1,22 @@
+# Skip node_modules and lock files
+node_modules/
+package-lock.json
+
+# Skip Python/model-related stuff
+*.h5
+*.zip
+*.pkl
+*.ckpt
+
+# VS Code settings or OS junk
+.vscode/
+__pycache__/
+.DS_Store
+
+# Skip backups or temp files
+*.bak
+*.tmp
+
+# Skip dataset/model folders if needed
+training/
+Plant Disease Prediction/
