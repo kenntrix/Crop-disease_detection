@@ -24,25 +24,24 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading } = useSelector((state) => state.authentication);
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for confirm password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev); // Toggle password visibility
+    setShowPassword((prev) => !prev);
   };
 
   const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword((prev) => !prev); // Toggle confirm password visibility
+    setShowConfirmPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate that password and confirmPassword match
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match.");
       return;
@@ -63,28 +62,31 @@ const RegisterPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center lg:h-screen lg:gap-y-12">
-        {/* Full-screen loader */}
+      <div className="flex flex-col items-center justify-center px-6 lg:h-screen bg-gradient-to-br from-green-200 via-white to-green-300 relative">
         {loading && (
           <div className="fixed inset-0 flex items-center justify-center bg-black opacity-75 z-50">
             <HashLoader color="#ffcb00" size={200} />
           </div>
         )}
 
-        <Card
-          horizontal
-          className="w-full md:max-w-3xl md:[&>*]:w-full md:[&>*]:p-8 [&>img]:hidden md:[&>img]:w-80 md:[&>img]:p-0 lg:[&>img]:block"
-        >
-          <h1 className="mb-3 text-2xl font-bold md:text-3xl">
-            Create a Free Account
+        <Card className="w-full md:max-w-3xl bg-white/80 backdrop-blur-md shadow-2xl rounded-2xl border border-gray-200">
+          <h1 className="mb-2 text-3xl font-extrabold text-center text-gray-800">
+            🌱 Create Your Free Account
           </h1>
+          <p className="text-center text-gray-600 mb-6">
+            Join LeafGuard AI and start protecting your plants today!
+          </p>
+
           <form
             onSubmit={handleSubmit}
             className="flex flex-col items-center w-full"
           >
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2 w-full">
-              <div className="mb-4 flex flex-col gap-y-3">
-                <Label htmlFor="username">Your username</Label>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 w-full">
+              {/* Username */}
+              <div className="flex flex-col gap-y-2">
+                <Label htmlFor="username" className="text-gray-700 font-medium">
+                  Username
+                </Label>
                 <TextInput
                   id="username"
                   name="username"
@@ -94,10 +96,15 @@ const RegisterPage = () => {
                   required
                   placeholder="username"
                   type="text"
+                  className="rounded-lg"
                 />
               </div>
-              <div className="mb-4 flex flex-col gap-y-3">
-                <Label htmlFor="email">Your email</Label>
+
+              {/* Email */}
+              <div className="flex flex-col gap-y-2">
+                <Label htmlFor="email" className="text-gray-700 font-medium">
+                  Email
+                </Label>
                 <TextInput
                   id="email"
                   name="email"
@@ -107,10 +114,15 @@ const RegisterPage = () => {
                   required
                   placeholder="name@company.com"
                   type="email"
+                  className="rounded-lg"
                 />
               </div>
-              <div className="mb-4 flex flex-col gap-y-3 relative">
-                <Label htmlFor="password">Your password</Label>
+
+              {/* Password */}
+              <div className="flex flex-col gap-y-2 relative">
+                <Label htmlFor="password" className="text-gray-700 font-medium">
+                  Password
+                </Label>
                 <TextInput
                   id="password"
                   name="password"
@@ -119,10 +131,11 @@ const RegisterPage = () => {
                   icon={MdKey}
                   placeholder="••••••••"
                   type={showPassword ? "text" : "password"}
+                  className="rounded-lg"
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-[60%] transform"
+                  className="absolute right-3 top-[55%] transform"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? (
@@ -132,9 +145,15 @@ const RegisterPage = () => {
                   )}
                 </button>
               </div>
-              {/* Confirm Password Field */}
-              <div className="mb-4 flex flex-col gap-y-3 relative">
-                <Label htmlFor="confirmPassword">Confirm password</Label>
+
+              {/* Confirm Password */}
+              <div className="flex flex-col gap-y-2 relative">
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-gray-700 font-medium"
+                >
+                  Confirm Password
+                </Label>
                 <TextInput
                   id="confirmPassword"
                   name="confirmPassword"
@@ -144,10 +163,11 @@ const RegisterPage = () => {
                   required
                   placeholder="••••••••"
                   type={showConfirmPassword ? "text" : "password"}
+                  className="rounded-lg"
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-[60%] transform"
+                  className="absolute right-3 top-[55%] transform"
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   {showConfirmPassword ? (
@@ -159,10 +179,11 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            <div className="mb-7 mt-5 w-full">
+            {/* Submit Button */}
+            <div className="mt-6 w-full">
               <Button
                 type="submit"
-                className="w-full flex items-center gap-x-4 bg-blue-500 hover:bg-green-500 transition duration-300 transform hover:scale-105"
+                className="w-full flex items-center justify-center gap-x-3 rounded-lg bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 transition-transform duration-300 hover:scale-105"
                 disabled={loading}
               >
                 {loading ? (
@@ -171,14 +192,18 @@ const RegisterPage = () => {
                     Signing up...
                   </>
                 ) : (
-                  "Create account"
+                  "Create Account"
                 )}
               </Button>
             </div>
 
-            <p className="text-sm text-gray-500 mt-4 text-center">
+            {/* Login Link */}
+            <p className="text-sm text-gray-600 mt-6 text-center">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-500">
+              <Link
+                to="/login"
+                className="text-green-600 font-semibold hover:underline"
+              >
                 Login
               </Link>
             </p>

@@ -70,7 +70,6 @@ const MyPredictionsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      {/* Full-screen loader */}
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black opacity-75 z-50">
           <SyncLoader color="#ffcb00" size={40} />

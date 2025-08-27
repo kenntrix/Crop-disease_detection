@@ -25,10 +25,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.authentication);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev); // Toggle password visibility
+    setShowPassword((prev) => !prev);
   };
 
   const handleLogin = async (e) => {
@@ -47,31 +47,33 @@ const LoginPage = () => {
       }
     } catch (err) {
       dispatch(signInFailure(err));
-      console.log(err);
       toast.error(err);
     }
   };
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center px-6 lg:h-screen lg:gap-y-12 bg-gray-50">
-        {/* Full-screen loader */}
+      <div className="flex flex-col items-center justify-center px-6 lg:h-screen bg-gradient-to-br from-green-200 via-white to-green-300 relative">
         {loading && (
           <div className="fixed inset-0 flex items-center justify-center bg-black opacity-75 z-50">
             <HashLoader color="#ffcb00" size={200} />
           </div>
         )}
 
-        <Card
-          horizontal
-          className="w-full md:max-w-2xl md:[&>*]:w-full md:[&>*]:p-10 [&>img]:hidden md:[&>img]:w-80 md:[&>img]:p-0 lg:[&>img]:block"
-        >
-          <h1 className="mb-3 text-2xl font-bold md:text-3xl">
-            Sign in to platform
+        <Card className="w-full md:max-w-2xl bg-white/80 backdrop-blur-md shadow-2xl rounded-2xl border border-gray-200">
+          <h1 className="mb-3 text-3xl font-extrabold text-center text-gray-800">
+            🌱 Welcome Back
           </h1>
+          <p className="text-center text-gray-500 mb-6">
+            Sign in to continue your plant health journey
+          </p>
+
           <form onSubmit={handleLogin}>
-            <div className="mb-4 flex flex-col gap-y-3">
-              <Label htmlFor="email">Your email</Label>
+            {/* Email */}
+            <div className="mb-4 flex flex-col gap-y-2">
+              <Label htmlFor="email" className="text-gray-700 font-medium">
+                Email
+              </Label>
               <TextInput
                 id="email"
                 name="email"
@@ -79,10 +81,16 @@ const LoginPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@company.com"
                 type="email"
+                required
+                className="rounded-lg"
               />
             </div>
-            <div className="mb-6 flex flex-col gap-y-3 relative">
-              <Label htmlFor="password">Your password</Label>
+
+            {/* Password */}
+            <div className="mb-6 flex flex-col gap-y-2 relative">
+              <Label htmlFor="password" className="text-gray-700 font-medium">
+                Password
+              </Label>
               <TextInput
                 id="password"
                 name="password"
@@ -90,10 +98,12 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 type={showPassword ? "text" : "password"}
+                required
+                className="rounded-lg"
               />
               <button
                 type="button"
-                className="absolute right-3 top-[60%] transform"
+                className="absolute right-3 top-[55%] transform"
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? (
@@ -103,22 +113,26 @@ const LoginPage = () => {
                 )}
               </button>
             </div>
-            <div className="mb-6 flex items-center justify-between">
-              <div className="flex items-center gap-x-3">
-                <Checkbox id="rememberMe" name="rememberMe" />
+
+            {/* Remember Me & Forgot Password */}
+            <div className="mb-6 flex items-center justify-between text-sm">
+              <div className="flex items-center gap-x-2">
+                <Checkbox id="rememberMe" />
                 <Label htmlFor="rememberMe">Remember me</Label>
               </div>
               <a
                 href="#"
-                className="w-1/2 text-right text-sm text-primary-600 dark:text-primary-300"
+                className="text-green-600 hover:underline font-medium"
               >
                 Forgot Password?
               </a>
             </div>
+
+            {/* Submit Button */}
             <div className="mb-6 w-full">
               <Button
                 type="submit"
-                className="w-full flex items-center gap-x-4 bg-blue-500 hover:bg-green-500 transition duration-300 transform hover:scale-105"
+                className="w-full flex items-center justify-center gap-x-3 rounded-lg bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 transition-transform duration-300 hover:scale-105"
                 disabled={loading}
               >
                 {loading ? (
@@ -132,9 +146,13 @@ const LoginPage = () => {
               </Button>
             </div>
 
-            <p className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="text-blue-600 hover:underline">
+            {/* Sign Up Link */}
+            <p className="mt-4 text-center text-gray-600">
+              Don’t have an account?{" "}
+              <Link
+                to="/register"
+                className="text-green-600 font-semibold hover:underline"
+              >
                 Sign Up
               </Link>
             </p>

@@ -9,20 +9,20 @@ const PredictionPage = () => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
 
-    // Validate file size (e.g., 10MB max)
-    if (file.size > 10 * 1024 * 1024) {
+    if (file && file.size > 5 * 1024 * 1024) {
       toast.error("Image size should be less than 5MB");
       return;
     }
 
     if (file) {
       setImage(file);
-      setPreview(URL.createObjectURL(file)); // Create a preview
-      setResult(null); // Reset previous result
+      setPreview(URL.createObjectURL(file));
+      setResult(null);
     }
   };
 
@@ -51,16 +51,22 @@ const PredictionPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-green-50 py-[10vh] px-4">
-      <div className="max-w-3xl w-full bg-white rounded-lg shadow-lg p-6">
+      <div className="max-w-3xl w-full bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-green-700 mb-4 text-center">
           🌱 Upload a Plant Leaf Image
         </h1>
-        <p className="text-gray-700 mb-6 text-center">
-          AI will analyze the image and detect diseases.
+        <p className="text-gray-600 mb-6 text-center">
+          Our AI will analyze your image and detect possible plant diseases.
         </p>
 
         {/* Upload Box */}
-        <label className="border-2 border-dashed border-green-500 bg-white w-full h-80 flex flex-col items-center justify-center cursor-pointer rounded-lg shadow-md hover:border-green-700 transition mb-6">
+        <label
+          className={`border-2 border-dashed ${
+            dragActive ? "border-green-700 bg-green-50" : "border-green-500"
+          } w-full h-80 flex flex-col items-center justify-center cursor-pointer rounded-lg shadow-md transition mb-6`}
+          onDragEnter={() => setDragActive(true)}
+          onDragLeave={() => setDragActive(false)}
+        >
           <input
             type="file"
             className="hidden"
@@ -75,10 +81,10 @@ const PredictionPage = () => {
             />
           ) : (
             <div className="flex flex-col items-center text-gray-600">
-              <FaCloudUploadAlt size={40} />
-              <p className="mt-2">Click to upload plant image</p>
+              <FaCloudUploadAlt size={50} className="text-green-600" />
+              <p className="mt-2 font-medium">Click or drag to upload</p>
               <p className="text-sm text-gray-500 mt-1">
-                Supports JPG, PNG (Max 10MB)
+                Supports JPG, PNG (Max 5MB)
               </p>
             </div>
           )}
@@ -87,16 +93,16 @@ const PredictionPage = () => {
         {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          className={`w-full mt-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300 ${
+          className={`w-full mt-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition duration-300 flex items-center justify-center ${
             !image ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={!image || loading}
         >
           {loading ? (
-            <span className="flex items-center justify-center">
-              <CircleLoader color="#ffffff" size={20} className="mr-2" />
+            <>
+              <CircleLoader color="#ffffff" size={20} className="mr-3" />
               Analyzing...
-            </span>
+            </>
           ) : (
             "🔍 Analyze Image"
           )}
@@ -104,53 +110,55 @@ const PredictionPage = () => {
 
         {/* Result Display */}
         {result && (
-          <div className="mt-6 p-4 bg-white border border-green-200 rounded-lg">
+          <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-lg shadow-sm">
             {result.error ? (
               <p className="text-red-500 text-center">{result.error}</p>
             ) : (
               <div>
-                <div className="mb-4">
-                  <h2 className="text-xl font-bold text-green-700 mb-2">
-                    {result.plant} - {result.disease}
-                  </h2>
-                  <p className="text-gray-700">
-                    Confidence: {(result.confidence * 100).toFixed(2)}%
-                  </p>
-                </div>
+                <h2 className="text-2xl font-bold text-green-700 mb-2 text-center">
+                  {result.plant} - {result.disease}
+                </h2>
+                <p className="text-gray-700 text-center mb-6">
+                  Confidence:{" "}
+                  <span className="font-semibold">
+                    {(result.confidence * 100).toFixed(2)}%
+                  </span>
+                </p>
 
                 {result.diseaseInfo && (
-                  <div className="bg-green-50 p-4 rounded-lg grid grid-cols-2 items-center">
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h3 className="font-semibold text-green-700 mb-2">
-                        About this disease:
+                        📝 About this disease:
                       </h3>
-                      <p className="text-gray-700 mb-3">
+                      <p className="text-gray-700 mb-4">
                         {result.diseaseInfo.description}
                       </p>
 
-                      <h3 className="font-semibold text-green-700 mb-1">
-                        Causes:
+                      <h3 className="font-semibold text-green-700 mb-2">
+                        ⚠️ Causes:
                       </h3>
-                      <ul className="list-disc pl-5 mb-3 text-gray-700">
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1">
                         {result.diseaseInfo.causes.map((item, index) => (
                           <li key={index}>{item}</li>
                         ))}
                       </ul>
                     </div>
+
                     <div>
-                      <h3 className="font-semibold text-green-700 mb-1">
-                        Prevention:
+                      <h3 className="font-semibold text-green-700 mb-2">
+                        🛡️ Prevention:
                       </h3>
-                      <ul className="list-disc pl-5 mb-3 text-gray-700">
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1 mb-4">
                         {result.diseaseInfo.prevention.map((item, index) => (
                           <li key={index}>{item}</li>
                         ))}
                       </ul>
 
-                      <h3 className="font-semibold text-green-700 mb-1">
-                        Treatment:
+                      <h3 className="font-semibold text-green-700 mb-2">
+                        💊 Treatment:
                       </h3>
-                      <ul className="list-disc pl-5 text-gray-700">
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1">
                         {result.diseaseInfo.treatment.map((item, index) => (
                           <li key={index}>{item}</li>
                         ))}

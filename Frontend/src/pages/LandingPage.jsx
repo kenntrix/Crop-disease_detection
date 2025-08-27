@@ -1,6 +1,6 @@
 import FeaturesSection from "../components/FeaturesSection";
 import HeroSection from "../components/HeroSection";
-import HowItWorks from "../components/HowItWorls";
+import HowItWorks from "../components/HowItWorks";
 
 const LandingPage = () => {
   return (

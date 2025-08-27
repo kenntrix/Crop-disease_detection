@@ -81,44 +81,67 @@ const NavbarSection = () => {
             <Dropdown
               arrowIcon={false}
               inline
-              label={<Avatar alt="User settings" img={avatar} rounded />}
-              className="w-56"
+              label={
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <Avatar alt="User settings" img={avatar} rounded />
+                  <span className="hidden md:block font-semibold text-white">
+                    {username}
+                  </span>
+                </div>
+              }
+              className="w-80 shadow-lg rounded-xl overflow-hidden bg-white border"
             >
-              <DropdownHeader>
-                <span className="block text-sm">
-                  Username: <span className="underline italic">{username}</span>
-                </span>
-                <span className="block truncate text-sm font-medium">
-                  {email}
-                </span>
+              <DropdownHeader className="rounded-xl bg-green-600 text-white p-4">
+                <span className="block text-xl font-semibold">{username}</span>
+                <span className="block text-lg truncate">{email}</span>
               </DropdownHeader>
-              <DropdownDivider />
-              <DropdownItem as={Link} to="/get_profile">
-                Profile
+
+              <DropdownDivider className="my-0" />
+
+              <DropdownItem
+                as={Link}
+                to="/get_profile"
+                className="hover:bg-[#e6f9f1] transition-colors"
+              >
+                <span className="flex items-center gap-2 text-lg">
+                  <i className="fa-regular fa-user text-[#08ab6f]"></i> Profile
+                </span>
               </DropdownItem>
-              <DropdownItem as={Link} to="/my-predictions">
-                My Predictions
+
+              <DropdownItem
+                as={Link}
+                to="/my-predictions"
+                className="hover:bg-[#e6f9f1] transition-colors"
+              >
+                <span className="flex items-center gap-2 text-lg">
+                  <i className="fa-solid fa-chart-line text-[#08ab6f]"></i> My
+                  Predictions
+                </span>
               </DropdownItem>
-              <DropdownDivider />
+
+              <DropdownDivider className="my-0" />
+
               <DropdownItem
                 as={Link}
                 onClick={handleSignout}
-                className="hover:bg-red-300 focus:bg-red-300"
+                className="hover:bg-red-100 text-red-600 font-medium transition-colors"
               >
-                Sign out
+                <span className="flex items-center gap-2 text-lg">
+                  <i className="fa-solid fa-right-from-bracket"></i> Sign out
+                </span>
               </DropdownItem>
             </Dropdown>
           ) : (
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <Link
                 to="/login"
-                className="px-4 py-2 text-sm font-medium text-[#08ab6f] bg-white rounded-lg hover:bg-gray-100 transition"
+                className="px-5 py-2.5 text-base font-semibold text-[#08ab6f] bg-white rounded-xl shadow-md hover:bg-gray-100 hover:scale-105 transition-transform duration-200"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-2 text-sm font-medium text-white bg-[#067a51] rounded-lg hover:bg-[#056342] transition"
+                className="px-5 py-2.5 text-base font-semibold text-white bg-[#067a51] rounded-xl shadow-md hover:bg-[#056342] hover:scale-105 transition-transform duration-200"
               >
                 Sign Up
               </Link>

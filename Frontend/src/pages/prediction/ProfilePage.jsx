@@ -232,7 +232,7 @@ const ProfilePage = () => {
               Your Plant Analysis Stats
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-100 p-4 rounded-lg">
                 <div className="flex items-center">
                   <div className="p-3 bg-green-100 rounded-full mr-3">
                     <FaLeaf className="text-green-600" />
@@ -245,7 +245,7 @@ const ProfilePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-blue-100 p-4 rounded-lg">
                 <div className="flex items-center">
                   <div className="p-3 bg-blue-100 rounded-full mr-3">
                     <FaHistory className="text-blue-600" />
@@ -262,7 +262,7 @@ const ProfilePage = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-yellow-50 p-4 rounded-lg">
+              <div className="bg-yellow-100 p-4 rounded-lg">
                 <div className="flex items-center">
                   <div className="p-3 bg-yellow-100 rounded-full mr-3">
                     <FaUser className="text-yellow-600" />
@@ -284,7 +284,7 @@ const ProfilePage = () => {
               Account Settings
             </h2>
             <div className="space-y-4">
-              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+              <div className="flex justify-between items-center p-4 bg-gray-100 rounded-lg">
                 <div>
                   <h3 className="font-medium text-gray-800">Change Password</h3>
                   <p className="text-sm text-gray-500">
@@ -300,7 +300,7 @@ const ProfilePage = () => {
                   Change Password
                 </Button>
               </div>
-              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+              <div className="flex justify-between items-center p-4 bg-gray-100 rounded-lg">
                 <div>
                   <h3 className="font-medium text-gray-800">Delete Account</h3>
                   <p className="text-sm text-gray-500">
@@ -320,7 +320,7 @@ const ProfilePage = () => {
       <Modal show={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
         <ModalHeader>Confirm Account Deletion</ModalHeader>
         <ModalBody>
-          <div className="space-y-4">
+          <div className="space-y-4 bg-green-100 p-4 rounded-lg">
             <p className="text-red-500 font-medium">
               Warning: This action cannot be undone!
             </p>

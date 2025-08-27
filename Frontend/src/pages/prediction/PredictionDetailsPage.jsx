@@ -235,7 +235,7 @@ const PredictionDetailsPage = () => {
       <Modal show={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
         <ModalHeader>Confirm Prediction Deletion</ModalHeader>
         <ModalBody>
-          <div className="space-y-4">
+          <div className="space-y-4 bg-green-100 p-4 rounded-lg">
             <p className="text-red-500 font-medium">
               Warning: This action cannot be undone!
             </p>
